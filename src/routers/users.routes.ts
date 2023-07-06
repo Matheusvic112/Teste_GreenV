@@ -2,17 +2,18 @@ import { Router } from "express";
 import { createUserController, UserDeleteController, UserUpdateController, getUserIdController, getAllUsersController, addUserToCompanyController, addUserToVehicleController } from "../controller/User.controllers";
 import { YupVerification } from "../schemas/serializer.schema";
 import { UserSchema } from "../schemas/users";
+import { verifyTokenValidationMiddleware } from "../middlewares/login/verifyTokenValidation.middleware";
 
 
 const userRouter = Router()
 
 userRouter.post('',YupVerification(UserSchema) ,createUserController)
-userRouter.delete('/:id',UserDeleteController)
-userRouter.patch('/:id',UserUpdateController)
-userRouter.get('/:id',getUserIdController)
-userRouter.get('',getAllUsersController)
-userRouter.post('/:id/companies/:idCompanie',addUserToCompanyController)
-userRouter.post('/:id/veiculos/:idVeiculo',addUserToVehicleController)
+userRouter.delete('/:id',verifyTokenValidationMiddleware,UserDeleteController)
+userRouter.patch('/:id',verifyTokenValidationMiddleware,UserUpdateController)
+userRouter.get('/:id',verifyTokenValidationMiddleware,getUserIdController)
+userRouter.get('',verifyTokenValidationMiddleware,getAllUsersController)
+userRouter.post('/:id/companies/:idCompanie',verifyTokenValidationMiddleware,addUserToCompanyController)
+userRouter.post('/:id/veiculos/:idVeiculo',verifyTokenValidationMiddleware,addUserToVehicleController)
 
 
 

@@ -49,3 +49,9 @@ export const CompanySchema = Yup.object().shape({
   phone: Yup.string().required("Phone da companhia é obrigátorio"),
   cnpj:Yup.string().required("Cnpj da companhia é obrigátorio")
 })
+
+export const loginSchema =Yup.object().shape({
+  email: Yup.string().required("Email da companhia é obrigátorio"),
+  password: Yup.string().required("password da companhia é obrigátorio"),
+
+})

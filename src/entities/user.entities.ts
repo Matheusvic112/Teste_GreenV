@@ -31,7 +31,5 @@ class User {
   @JoinColumn()
   veiculos: Veiculos[];
 
-//44e0f24e-f4c2-4773-ba30-522ce9afc07b
-//569d161a-c09c-4aec-a6a4-0f174af6b7db
 }
 export{User}
