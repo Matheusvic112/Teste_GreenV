@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinColumn, JoinTable, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinColumn, JoinTable, ManyToOne, OneToOne, OneToMany } from "typeorm";
 import { User } from "./user.entities";
 import { Companies } from "./companies.entities";
 
@@ -20,17 +20,18 @@ class Veiculos{
   @Column({length:20})
   plate:string;
   
-  @Column({default:true})
-  rented: boolean
+  
 
-  @ManyToOne(() => Companies, companies => companies.veiculos)
+  @ManyToOne(() => Companies, companies => companies.veiculo ,  { onDelete: 'CASCADE' })
+  @JoinColumn({name:"companies_name"})
   companies: Companies;
 
-  @ManyToMany(() => User, user => user.veiculos)
-  @JoinTable({ name: "user_veiculos" })
+  @ManyToOne(() => User, user => user.veiculos,  { onDelete: 'CASCADE' })
+  @JoinColumn()
+  users: User;
 
-  
-  users: User[];
 
+ 
 }
 export{Veiculos}
+

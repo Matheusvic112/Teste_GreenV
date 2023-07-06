@@ -5,24 +5,25 @@ import { Veiculos } from "./cars.entities";
 @Entity("companies")
 class Companies {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
-  @Column({nullable: false })
-  name: string ;
+  @Column()
+  name: string;
 
-  @Column({unique:true})
-  email: string ;
+  @Column()
+  email: string;
 
-  @Column({unique:true})
+  @Column()
   phone: string;
 
-
-  @Column({unique:true})
+  @Column()
   cnpj: string;
-  @OneToMany(() => Veiculos, veiculos => veiculos.companies)
-  veiculos: Veiculos[];
 
-  @OneToMany(() => User, user => user.companies)
+  @OneToMany(() => Veiculos, veiculos => veiculos.companies, { onDelete: 'CASCADE' })
+  veiculo: Veiculos[];
+
+  @OneToMany(() => User, user => user.companies, { onDelete: 'CASCADE' })
   users: User[];
 }
-export{Companies}
+
+export { Companies };
