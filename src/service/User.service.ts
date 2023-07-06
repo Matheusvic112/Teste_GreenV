@@ -5,7 +5,7 @@ import { hash } from "bcrypt";
 import { Companies } from "../entities/companies.entities";
 import { Veiculos } from "../entities/cars.entities";
 
-interface IUser {
+export interface IUser {
   id:string
   name: string;
   email: string;
