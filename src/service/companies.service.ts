@@ -68,6 +68,10 @@ async addComapanyToVeiculo(companyId: string, veiculoId: string) {
     throw new Error("Veículo não encontrado");
   }
 
+  if (company.veiculo) {
+    throw new Error("A empresa já possui um veículo associado");
+  }
+
   vehicle.companies = company;
 
   await veiculoRepository.save(vehicle);
