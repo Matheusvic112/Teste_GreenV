@@ -1,35 +1,34 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from "typeorm";
-import { User } from "./user.entities";
-import { Veiculos } from "./cars.entities";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Veiculos } from "./cars.entities"
+import { User } from "./user.entities"
 
 @Entity("companies")
 class Companies {
-  static findOne(companyId: string) {
-    throw new Error("Method not implemented.");
-  }
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string
 
   @Column()
-  name: string;
+  name: string
 
   @Column()
-  email: string;
+  email: string
 
   @Column()
-  phone: string;
+  phone: string
 
   @Column()
-  cnpj: string;
+  cnpj: string
 
   @Column()
-  createdBy:string
+  createdBy: string
 
-  @OneToMany(() => Veiculos, veiculos => veiculos.companies, { onDelete: 'CASCADE' })
-  veiculo: Veiculos[];
+  @OneToMany(() => Veiculos, (veiculos) => veiculos.companies, {
+    onDelete: "CASCADE",
+  })
+  veiculo: Veiculos[]
 
-  @OneToMany(() => User, user => user.companies, { onDelete: 'CASCADE' })
-  users: User[] ;
+  @OneToMany(() => User, (user) => user.companies, { onDelete: "CASCADE" })
+  users: User[]
 }
 
-export { Companies };
+export { Companies }

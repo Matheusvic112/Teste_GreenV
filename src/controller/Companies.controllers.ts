@@ -45,6 +45,6 @@ export const companyUpdateController = async (req: Request, res: Response) => {
 
 export async function addCompanyToVeiculoController(req: Request, res: Response) {
   const  { id,idCompany}  = req.params;
-  const companies = await companiesService.addComapanyToVeiculo(id, idCompany);
-  return res.status(201).json(companies);
+  const company = await companiesService.addComapanyToVeiculo(id, idCompany);
+  return res.status(201).json(company);
 }

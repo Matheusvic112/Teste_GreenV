@@ -1,35 +1,44 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, ManyToMany, JoinTable, OneToOne, OneToMany } from "typeorm";
-import { Companies } from "./companies.entities";
-import { Veiculos } from "./cars.entities";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm"
+import { Veiculos } from "./cars.entities"
+import { Companies } from "./companies.entities"
 
 @Entity("users")
 class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string
 
   @Column()
-  name: string ;
+  name: string
 
   @Column()
-  email: string ;
+  email: string
 
   @Column()
-  phone: string;
+  phone: string
 
   @Column()
-  cpf: string;
+  cpf: string
 
-  @Column({select:false})
-  password: string;
-  
-  @ManyToOne(() => Companies, company => company.users)
+  @Column({ select: false })
+  password: string
+
+  @ManyToOne(() => Companies, (company) => company.users, {
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
-  companies: Companies | null;
+  companies: Companies | null
 
-
-  @OneToMany(() => Veiculos, veiculo => veiculo.users, { onDelete: 'CASCADE' })
+  @OneToMany(() => Veiculos, (veiculo) => veiculo.users, {
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
-  veiculos: Veiculos[];
-
+  veiculos: Veiculos[]
 }
-export{User}
+export { User }

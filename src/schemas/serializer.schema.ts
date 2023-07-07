@@ -1,7 +1,7 @@
-import * as yup from "yup";
-import { AnySchema } from "yup";
-import { NextFunction, Request, Response } from "express";
-import { AppError } from "../errors";
+import { NextFunction, Request, Response } from "express"
+import * as yup from "yup"
+import { AnySchema } from "yup"
+import { AppError } from "../errors"
 
 export const YupVerification =
   (serializer: AnySchema) =>
@@ -10,11 +10,11 @@ export const YupVerification =
       await serializer.validate(req.body, {
         stripUnknown: true,
         abortEarly: false,
-      });
-      return next();
+      })
+      return next()
     } catch (error: any) {
       if (error instanceof yup.ValidationError) {
-        throw new AppError(error.errors, 400);
+        throw new AppError(error.errors, 400)
       }
     }
-  };
+  }

@@ -1,14 +1,13 @@
-import jwt from "jsonwebtoken";
-import { AppDataSource } from "../data-source";
-import { IUser } from "./User.service";
-import { User } from "../entities/user.entities";
-
+import jwt from "jsonwebtoken"
+import { AppDataSource } from "../data-source"
+import { User } from "../entities/user.entities"
+import { IUser } from "./User.service"
 
 export const loginService = async ({ email }: IUser) => {
-  const userRepo = AppDataSource.getRepository(User);
+  const userRepo = AppDataSource.getRepository(User)
   const userEmail = (await userRepo.findOne({
     where: { email: email },
-  })) as User;
+  })) as User
 
   const token = jwt.sign(
     { email: userEmail.email, id: userEmail.id },
@@ -17,7 +16,7 @@ export const loginService = async ({ email }: IUser) => {
       expiresIn: "48h",
       subject: userEmail.id,
     }
-  );
+  )
 
-  return { token: token };
-};
+  return { token: token }
+}
