@@ -82,6 +82,14 @@ export interface IUser {
       throw new Error("Companies não encontrado");
     }
   
+    if (findUser.companies) {
+      throw new Error("Usuário já possui uma empresa associada");
+    }
+ 
+    if (findUser.companies !== null && findUser.companies !== undefined) {
+      throw new Error("Usuário já possui uma empresa associada");
+    }
+
     findUser.companies = company;
   
    return await userRepository.save(findUser);
@@ -90,8 +98,8 @@ export interface IUser {
     const userRepository = this.userRepo;
     const veiculoRepository = this.veiculoRepo;
   
-    const user = await userRepository.findOne({ where: { id: userId } });
-    const vehicle = await veiculoRepository.findOne({ where: { id: veiculoId }});
+    const user = await userRepository.findOne({ where: { id: userId }, relations: ["veiculos"] });
+    const vehicle = await veiculoRepository.findOne({ where: { id: veiculoId } });
   
     if (!user) {
       throw new Error("Usuário não encontrado");
@@ -100,11 +108,16 @@ export interface IUser {
     if (!vehicle) {
       throw new Error("Veículo não encontrado");
     }
- 
- 
-    user.veiculos =[vehicle]
+  
+    if (user.veiculos.length > 0) {
+      throw new Error("Usuário já possui um veículo associado");
+    }
+  
+    user.veiculos = [vehicle];
+  
     const updatedUser = await userRepository.save(user);
     const { password, ...responseUser } = updatedUser;
+  
     return responseUser;
   }
 }

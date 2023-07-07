@@ -22,9 +22,9 @@ class User {
   @Column({select:false})
   password: string;
   
-  @ManyToOne(() => Companies, company => company.users, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Companies, company => company.users)
   @JoinColumn()
-  companies: Companies;
+  companies: Companies | null;
 
 
   @OneToMany(() => Veiculos, veiculo => veiculo.users, { onDelete: 'CASCADE' })

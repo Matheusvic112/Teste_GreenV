@@ -8,16 +8,19 @@ interface ICompanies {
   name: string;
   email: string;
   phone: string;
+  createdBy: string;
 }
 
  class CompaniesService{
   private companisRepo = AppDataSource.getRepository(Companies);
   private veiculoRepo = AppDataSource.getRepository(Veiculos)
-async createCompany(body: ICompanies) {
-  const companyCreate = this.companisRepo.create({ ...body });
-  await this.companisRepo.save(companyCreate);
-  return companyCreate;
-}
+  private userRepo = AppDataSource.getRepository(User)
+  async createCompany(body: ICompanies, createdBy: string) {
+    const companyCreate = this.companisRepo.create({ ...body, createdBy });
+    await this.companisRepo.save(companyCreate);
+  
+    return companyCreate;
+  }
 
 async getAllCompanies() {
   const companyGetAll = await this.companisRepo.find();
@@ -70,6 +73,53 @@ async addComapanyToVeiculo(companyId: string, veiculoId: string) {
   await veiculoRepository.save(vehicle);
 
   return vehicle;
+}
+async removeUserFromCompany(userId: string, companyId: string) {
+  const companyRepository = this.companisRepo;
+  const userRepository = this.userRepo;
+
+  const company = await companyRepository.findOne({
+    where: { id: companyId },
+    relations: ["users"],
+  });
+
+  if (!company) {
+    throw new Error("Empresa não encontrada");
+  }
+  const user = company.users.find((user) => user.id === userId);
+
+  if (!user) {
+    throw new Error("Usuário não encontrado na empresa");
+  }
+
+  user.companies = null;
+  await userRepository.save(user);
+
+  return;
+}
+async removeVehicleFromCompany(userId: string, vehicleId: string) {
+  const companyRepository = this.companisRepo;
+  const vehicleRepository = this.veiculoRepo;
+
+  const company = await companyRepository.findOne({
+    where: { id: vehicleId },
+    relations: ["veiculo"],
+  });
+
+  if (!company) {
+    throw new Error("Empresa não encontrada");
+  }
+
+  const vehicle = company.veiculo.find((vehicle) => vehicle.id === userId);
+  
+  if (!vehicle) {
+    throw new Error("Veículo não encontrado na empresa");
+  }
+
+  vehicle.companies = null;
+  await vehicleRepository.save(vehicle);
+
+  return;
 }
 
 }
