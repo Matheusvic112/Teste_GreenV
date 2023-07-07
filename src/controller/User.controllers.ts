@@ -22,7 +22,6 @@ export const UserDeleteController = async (req: Request, res: Response) => {
   return res.status(204).json(user);
 };
 
-
 export const UserUpdateController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const user = await UserService.updateUser( req.body,id);

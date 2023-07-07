@@ -4,11 +4,7 @@ import jwt from "jsonwebtoken";
 
 
 
-export const verifyTokenValidationMiddleware = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const verifyTokenValidationMiddleware = async (req: Request,res: Response,next: NextFunction) => {
   const { authorization } = req.headers;
   const token = authorization && authorization.split(" ")[1];
 

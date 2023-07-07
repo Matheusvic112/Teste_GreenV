@@ -8,16 +8,15 @@ interface IVeiculos{
   year: string;
   plate:string;
   rented: boolean
+  idVeiculo:string
+  createdBy:string
 }
 
 class VehicleService{
   private veiculosRepo = AppDataSource.getRepository(Veiculos);
-  async createVehicle(body: IVeiculos) {
-    
-    const vehicleCreate = this.veiculosRepo.create({ ...body });
-
+  async createVehicle(body: IVeiculos , createdBy:string) {
+    const vehicleCreate =  this.veiculosRepo.create({ ...body , createdBy });
     await this.veiculosRepo.save(vehicleCreate);
-  
   
     return vehicleCreate;
   }

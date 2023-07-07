@@ -20,11 +20,13 @@ class Veiculos{
   @Column({length:20})
   plate:string;
   
+  @Column()
+  createdBy:string
   
 
   @ManyToOne(() => Companies, companies => companies.veiculo ,  { onDelete: 'CASCADE' })
   @JoinColumn({name:"companies_name"})
-  companies: Companies;
+  companies: Companies | null;
 
   @ManyToOne(() => User, user => user.veiculos,  { onDelete: 'CASCADE' })
   @JoinColumn()

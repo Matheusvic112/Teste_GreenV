@@ -4,6 +4,9 @@ import { Veiculos } from "./cars.entities";
 
 @Entity("companies")
 class Companies {
+  static findOne(companyId: string) {
+    throw new Error("Method not implemented.");
+  }
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -19,11 +22,14 @@ class Companies {
   @Column()
   cnpj: string;
 
+  @Column()
+  createdBy:string
+
   @OneToMany(() => Veiculos, veiculos => veiculos.companies, { onDelete: 'CASCADE' })
   veiculo: Veiculos[];
 
   @OneToMany(() => User, user => user.companies, { onDelete: 'CASCADE' })
-  users: User[];
+  users: User[] ;
 }
 
 export { Companies };

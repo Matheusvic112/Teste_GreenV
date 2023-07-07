@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import VehicleService from "../service/Vehicles.service";
 
 export const createVehicleController = async (req: Request, res: Response) => {
-  const companies = await VehicleService.createVehicle( req.body);
+  const{id} = req.params
+  const companies = await VehicleService.createVehicle( req.body ,id);
   return res.status(201).json(companies);
 };
 
@@ -30,3 +31,4 @@ export const getVehicleIdController = async (req: Request, res: Response) => {
   const user = await VehicleService.getVehicleById(id);
   return res.status(200).json(user);
 };
+
